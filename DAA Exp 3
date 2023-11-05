@@ -1,0 +1,26 @@
+def fractional_knapsack(weights, values, capacity):
+    # Combine item values and weights into tuples, then sort them based on the value-to-weight ratio (in descending order)
+    items = sorted(zip(values, weights), key=lambda item: item[0] / item[1], reverse=True)
+    total_value = 0  # Initialize the total value to 0
+
+    # Iterate through the sorted items
+    for val, wt in items:
+        # If there's enough capacity to add the entire item, do so
+        if capacity >= wt:
+            total_value += val  # Add the full value of the item
+            capacity -= wt  # Reduce the remaining capacity
+        else:
+            # If there's not enough capacity, take a fraction of the item
+            total_value += (capacity / wt) * val  # Add the fractional value
+            break  # Stop the loop, as the knapsack is full
+
+    return total_value
+
+if __name__ == "__main__":
+    values = [25, 14, 10]  # List of item values
+    weights = [10, 15, 30]  # List of item weights
+    knapsack_capacity = 12  # Maximum capacity of the knapsack
+
+    # Call the fractional_knapsack function to find the maximum value
+    max_value = fractional_knapsack(weights, values, knapsack_capacity)
+    print("Maximum value in Knapsack =", max_value)  # Print the result
